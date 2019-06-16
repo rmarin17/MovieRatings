@@ -4,4 +4,6 @@
     <string name="btn_tv">Series</string>
 
     <string name="url_img">https://image.tmdb.org/t/p/w500</string>
+
+    <string name="description">Descripción</string>
 </resources>

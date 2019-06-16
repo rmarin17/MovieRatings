@@ -2,8 +2,10 @@ package rappi.test.com.movieratins.util
 
 import android.view.View
 import android.widget.ImageView
+import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
+import rappi.test.com.movieratins.domain.Movie
 
 /**
  * Binding adapter used to hide the spinner once data is available

@@ -9,6 +9,9 @@ interface MovieDao {
     @Query("select * from databasemovie")
     fun getMovies(): LiveData<List<DatabaseMovie>>
 
+    @Query("SELECT * from databasemovie WHERE id = :key")
+    fun getMovieWithId(key: Long): LiveData<DatabaseMovie>
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertAll(vararg videos: DatabaseMovie)
 }

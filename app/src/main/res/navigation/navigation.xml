@@ -8,5 +8,17 @@
               android:name="rappi.test.com.movieratins.ui.ListMovieFragment"
               android:label="fragment_list_movie"
               tools:layout="@layout/fragment_list_movie"
-    />
+    >
+        <action android:id="@+id/action_listMovieFragment_to_movieDetailFragment"
+                app:destination="@id/movieDetailFragment"
+                app:enterAnim="@anim/slide_in_right"
+                app:popEnterAnim="@anim/slide_in_right"/>
+    </fragment>
+    <fragment android:id="@+id/movieDetailFragment"
+              android:name="rappi.test.com.movieratins.ui.detail.MovieDetailFragment"
+              android:label="MovieDetailFragment"
+              tools:layout="@layout/fragment_movie_detail">
+        <argument android:name="movieKey"
+                  app:argType="long"/>
+    </fragment>
 </navigation>

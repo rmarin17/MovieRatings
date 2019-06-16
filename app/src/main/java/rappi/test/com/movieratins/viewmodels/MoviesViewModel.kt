@@ -4,9 +4,7 @@ import android.app.Application
 import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkInfo
-import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.*
 import com.example.android.devbyteviewer.database.getDatabase
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -22,6 +20,18 @@ class MoviesViewModel(application: Application) : AndroidViewModel(application) 
      */
     private val viewModelJob = SupervisorJob()
 
+    private val _navigateToMovieData = MutableLiveData<Long>()
+    val navigateToMovieData
+        get() = _navigateToMovieData
+
+    fun onMovieClicked(id: Long) {
+        _navigateToMovieData.value = id
+    }
+
+    fun onMovieDataNavigated() {
+        _navigateToMovieData.value = null
+    }
+
     /**
      * This is the main scope for all coroutines launched by MainViewModel.
      *
@@ -29,6 +39,9 @@ class MoviesViewModel(application: Application) : AndroidViewModel(application) 
      * viewModelJob.cancel()
      */
     private val viewModelScope = CoroutineScope(viewModelJob + Dispatchers.Main)
+
+
+
 
     private val database = getDatabase(application)
     private val moviesRepository = MoviesRepository(database)
@@ -58,7 +71,7 @@ class MoviesViewModel(application: Application) : AndroidViewModel(application) 
     }
 
     /**
-     * Factory for constructing DevByteViewModel with parameter
+     * Factory for constructing MovieViewModel with parameter
      */
     class Factory(val app: Application) : ViewModelProvider.Factory {
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {

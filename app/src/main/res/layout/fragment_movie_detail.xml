@@ -1,26 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout
-        xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
->
-
+        xmlns:tools="http://schemas.android.com/tools">
     <data>
         <variable
-                name="movie"
-                type="rappi.test.com.movieratins.domain.Movie"/>
-
-        <variable
-                name="clickListener"
-                type="rappi.test.com.movieratins.ui.MovieClick"/>
+                name="movieDetailViewModel"
+                type="rappi.test.com.movieratins.ui.detail.MovieDetailViewModel"/>
     </data>
-
     <androidx.constraintlayout.widget.ConstraintLayout
+            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:onClick="@{() -> clickListener.onClick(movie)}">
-
+            android:layout_height="match_parent"
+            tools:context=".ui.detail.MovieDetailFragment">
         <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cardInfo"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
@@ -28,9 +21,6 @@
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
                 android:layout_marginRight="8dp"
-                android:layout_marginBottom="8dp"
-                app:cardElevation="8dp"
-                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
@@ -49,7 +39,7 @@
                         android:adjustViewBounds="false"
                         android:cropToPadding="false"
                         android:scaleType="centerCrop"
-                        app:imageUrl="@{@string/url_img + movie.backdropPath}"
+                        app:imageUrl="@{@string/url_img + movieDetailViewModel.movie.backdropPath}"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"/>
@@ -64,7 +54,7 @@
                         app:layout_constraintTop_toTopOf="parent"/>
 
                 <TextView
-                        android:id="@+id/name"
+                        android:id="@+id/detail_title"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
@@ -73,8 +63,8 @@
                         android:textColor="@android:color/white"
                         app:layout_constraintBottom_toBottomOf="@+id/mask"
                         app:layout_constraintStart_toStartOf="parent"
+                        android:text="@{movieDetailViewModel.movie.title}"
                         tools:text="Nombre Pelicula"
-                        android:text="@{movie.title}"
                 />
 
                 <ImageView
@@ -106,7 +96,7 @@
                         app:layout_constraintBottom_toBottomOf="@+id/iconDate"
                         app:layout_constraintStart_toEndOf="@+id/iconDate"
                         tools:text="Estreno"
-                        android:text="@{movie.releaseDate}"
+                        android:text="@{movieDetailViewModel.movie.releaseDate}"
                         app:layout_constraintTop_toTopOf="@+id/iconDate"/>
 
                 <TextView
@@ -117,11 +107,65 @@
                         app:layout_constraintBottom_toBottomOf="@+id/iconStar"
                         app:layout_constraintStart_toEndOf="@+id/iconStar"
                         tools:text="1000"
-                        android:text='@{"" + movie.voteAverage}'
+                        android:text='@{"" + movieDetailViewModel.movie.voteAverage}'
                         app:layout_constraintTop_toTopOf="@+id/iconStar"/>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
+
         </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cardDes"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginBottom="8dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/cardInfo">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                <TextView
+                        android:id="@+id/labelDes"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginTop="8dp"
+                        android:text="@string/description"
+                        android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"/>
+
+                <TextView
+                        android:id="@+id/des"
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:layout_marginRight="8dp"
+                        android:layout_marginBottom="8dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/labelDes"
+                        android:text="@{movieDetailViewModel.movie.overview}"
+                        tools:text="Descripción"
+
+                />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
-

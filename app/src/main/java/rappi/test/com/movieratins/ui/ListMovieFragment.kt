@@ -6,11 +6,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.annotation.LayoutRes
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -72,37 +74,29 @@ class ListMovieFragment : Fragment() {
      *
      * @return Return the View for the fragment's UI.
      */
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
-        val binding: FragmentListMovieBinding = DataBindingUtil.inflate(
-            inflater,
-            R.layout.fragment_list_movie,
-            container,
-            false)
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        val binding: FragmentListMovieBinding =
+            DataBindingUtil.inflate(inflater, R.layout.fragment_list_movie, container, false)
         // Set the lifecycleOwner so DataBinding can observe LiveData
         binding.setLifecycleOwner(viewLifecycleOwner)
 
-        val manager = GridLayoutManager(activity, 3)
-        binding.recyclerView.layoutManager = manager
-
-
         binding.viewModel = viewModel
 
-        viewModelAdapter = ListMoviesAdapter(MovieClick {
-            // When a video is clicked this block or lambda will be called by ListMoviesAdapter
+        viewModelAdapter = ListMoviesAdapter(MovieClick { movieId ->
+            viewModel.onMovieClicked(movieId)
 
-            // context is not around, we can safely discard this click since the Fragment is no
-            // longer on the screen
-            /*val packageManager = context?.packageManager ?: return@VideoClick
-
-            // Try to generate a direct intent to the YouTube app
-            var intent = Intent(Intent.ACTION_VIEW, it.launchUri)
-            if(intent.resolveActivity(packageManager) == null) {
-                // YouTube app isn't found, use the web url
-                intent = Intent(Intent.ACTION_VIEW, Uri.parse(it.url))
+        })
+        viewModel.navigateToMovieData.observe(this, Observer { movie ->
+            movie?.let {
+                this.findNavController().navigate(
+                    ListMovieFragmentDirections
+                        .actionListMovieFragmentToMovieDetailFragment(movie)
+                )
+                viewModel.onMovieDataNavigated()
             }
-
-            startActivity(intent)*/
         })
 
         binding.root.findViewById<RecyclerView>(R.id.recycler_view).apply {
@@ -118,19 +112,19 @@ class ListMovieFragment : Fragment() {
  * Click listener for Videos. By giving the block a name it helps a reader understand what it does.
  *
  */
-class MovieClick(val block: (Movie) -> Unit) {
+class MovieClick(val clickListener: (movieId: Long) -> Unit) {
     /**
-     * Called when a video is clicked
+     * Called when a movie is clicked
      *
-     * @param video the video that was clicked
+     * @param movie the movie that was clicked
      */
-    fun onClick(movie: Movie) = block(movie)
+    fun onClick(movie: Movie) = clickListener(movie.id)
 }
 
 /**
  * RecyclerView Adapter for setting up data binding on the items in the list.
  */
-class ListMoviesAdapter(val callback: MovieClick) : RecyclerView.Adapter<DevByteViewHolder>() {
+class ListMoviesAdapter(val clickListener: MovieClick) : RecyclerView.Adapter<DevByteViewHolder>() {
 
     /**
      * The results that our Adapter will show
@@ -154,7 +148,8 @@ class ListMoviesAdapter(val callback: MovieClick) : RecyclerView.Adapter<DevByte
             LayoutInflater.from(parent.context),
             DevByteViewHolder.LAYOUT,
             parent,
-            false)
+            false
+        )
         return DevByteViewHolder(withDataBinding)
     }
 
@@ -168,7 +163,7 @@ class ListMoviesAdapter(val callback: MovieClick) : RecyclerView.Adapter<DevByte
     override fun onBindViewHolder(holder: DevByteViewHolder, position: Int) {
         holder.viewDataBinding.also {
             it.movie = movies[position]
-            it.movieCallback = callback
+            it.clickListener = clickListener
         }
     }
 
