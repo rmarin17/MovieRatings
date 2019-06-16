@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+>
+
+    <data>
+        <variable
+                name="movie"
+                type="rappi.test.com.movieratins.domain.Movie"/>
+
+        <variable
+                name="movieCallback"
+                type="rappi.test.com.movieratins.ui.MovieClick" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        <com.google.android.material.card.MaterialCardView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginBottom="8dp"
+                app:cardElevation="8dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/linearLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                <ImageView
+                        android:id="@+id/img"
+                        android:layout_width="match_parent"
+                        android:layout_height="180dp"
+                        android:background="#333"
+                        android:adjustViewBounds="false"
+                        android:cropToPadding="false"
+                        android:scaleType="centerCrop"
+                        app:imageUrl="@{@string/url_img + movie.backdropPath}"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageView
+                        android:id="@+id/mask"
+                        android:layout_width="match_parent"
+                        android:layout_height="180dp"
+                        android:background="@drawable/mask"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                        android:id="@+id/name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginBottom="16dp"
+                        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
+                        android:textColor="@android:color/white"
+                        app:layout_constraintBottom_toBottomOf="@+id/mask"
+                        app:layout_constraintStart_toStartOf="parent"
+                        tools:text="Nombre Pelicula"
+                        android:text="@{movie.title}"
+                />
+
+                <ImageView
+                        android:id="@+id/iconDate"
+                        android:layout_width="@dimen/icon"
+                        android:layout_height="@dimen/icon"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="8dp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/mask"
+                        app:srcCompat="@drawable/ic_calendar" />
+
+                <ImageView
+                        android:id="@+id/iconStar"
+                        android:layout_width="@dimen/icon"
+                        android:layout_height="@dimen/icon"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="8dp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/iconDate"
+                        app:srcCompat="@drawable/ic_star" app:layout_constraintBottom_toBottomOf="parent"
+                        android:layout_marginBottom="8dp"/>
+
+                <TextView
+                        android:id="@+id/date"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        app:layout_constraintBottom_toBottomOf="@+id/iconDate"
+                        app:layout_constraintStart_toEndOf="@+id/iconDate"
+                        tools:text="Estreno"
+                        android:text="@{movie.releaseDate}"
+                        app:layout_constraintTop_toTopOf="@+id/iconDate"/>
+
+                <TextView
+                        android:id="@+id/start"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        app:layout_constraintBottom_toBottomOf="@+id/iconStar"
+                        app:layout_constraintStart_toEndOf="@+id/iconStar"
+                        tools:text="1000"
+                        android:text='@{"" + movie.voteAverage}'
+                        app:layout_constraintTop_toTopOf="@+id/iconStar"/>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </com.google.android.material.card.MaterialCardView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
+
