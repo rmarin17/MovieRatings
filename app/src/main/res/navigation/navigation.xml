@@ -21,4 +21,8 @@
         <argument android:name="movieKey"
                   app:argType="long"/>
     </fragment>
+    <fragment android:id="@+id/aboutFragment" android:name="rappi.test.com.movieratins.ui.AboutFragment"
+              android:label="fragment_about" tools:layout="@layout/fragment_about"/>
+    <fragment android:id="@+id/rulesFragment" android:name="rappi.test.com.movieratins.ui.RulesFragment"
+              android:label="fragment_rules" tools:layout="@layout/fragment_rules"/>
 </navigation>

@@ -21,6 +21,7 @@ buildscript {
         version_work = "1.0.0-alpha11"
         version_timber = "4.7.1"
         version_fresco = "1.11.0"
+        version_material = "1.0.0"
     }
     repositories {
         google()
