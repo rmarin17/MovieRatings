@@ -14,14 +14,11 @@ class RefreshDataWorker(appContext: Context, params: WorkerParameters):
         const val WORK_NAME = "RefreshDataWorker"
     }
 
-    /**
-     * A coroutine-friendly method to do your work.
-     */
     override suspend fun doWork(): Payload {
         val database = getDatabase(applicationContext)
         val repository = MoviesRepository(database)
         return try {
-            repository.refreshVideos()
+            repository.refreshMovies()
             Payload(Result.SUCCESS)
         } catch (e: HttpException) {
             Payload(Result.RETRY)

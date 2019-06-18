@@ -6,7 +6,7 @@
     <string name="url_img">https://image.tmdb.org/t/p/w500</string>
 
     <string name="description">Description</string>
-    <string name="about_text">Android Trivia will help remind you of important concepts you have learned and will learn in Android development.\n\nConsider modifying the questions and graphics to make this game your own!</string>
+    <string name="about_text">Movie Ratings will help you to explore the world of movies and decide what to watch, based on popularity, release date and top rated!</string>
     <string name="about">About</string>
     <string name="upcoming">Upcoming</string>
     <string name="topRated">Top Rated</string>

@@ -23,6 +23,22 @@
         <argument android:name="movieKey"
                   app:argType="long"/>
     </fragment>
-    <fragment android:id="@+id/popularityFragment" android:name="rappi.test.com.movieratins.ui.AboutFragment"
-              android:label="About" tools:layout="@layout/fragment_about"/>
+    <fragment android:id="@+id/upcomingFragment" android:name="rappi.test.com.movieratins.ui.UpcomingFragment"
+              android:label="Upcoming Movies">
+        <action android:id="@+id/action_upcomingFragment_to_movieDetailFragment"
+                app:destination="@id/movieDetailFragment" app:enterAnim="@anim/slide_in_right"
+                app:popEnterAnim="@anim/fade_out"/>
+    </fragment>
+    <fragment android:id="@+id/popularityMovieFragment"
+              android:name="rappi.test.com.movieratins.ui.PopularityMovieFragment"
+              android:label="Popularity Movies">
+        <action android:id="@+id/action_popularityMovieFragment_to_movieDetailFragment"
+                app:destination="@id/movieDetailFragment"/>
+    </fragment>
+    <fragment android:id="@+id/topMovieFragment" android:name="rappi.test.com.movieratins.ui.TopMovieFragment"
+              android:label="Top Rated Movies">
+        <action android:id="@+id/action_topMovieFragment_to_movieDetailFragment"
+                app:destination="@id/movieDetailFragment" app:enterAnim="@anim/slide_in_right"
+                app:popEnterAnim="@anim/fade_out"/>
+    </fragment>
 </navigation>

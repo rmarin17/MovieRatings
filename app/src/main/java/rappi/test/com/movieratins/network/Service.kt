@@ -12,7 +12,7 @@ import retrofit2.http.Query
 private const val BASE_URL = "https://api.themoviedb.org/4/"
 
 /**
- * A retrofit service to fetch a movie playlist.
+ * A retrofit service to fetch a movie movieList.
  */
 interface MoviesService {
     @GET("list/1")
@@ -31,7 +31,7 @@ private val moshi = Moshi.Builder()
     .build()
 
 /**
- * Main entry point for network access. Call like `Network.devbytes.getPlaylist()`
+ * Main entry point for network access. Call like `Network.devbytes.getMovieList()`
  */
 object Network {
     // Configure retrofit to parse JSON and use coroutines

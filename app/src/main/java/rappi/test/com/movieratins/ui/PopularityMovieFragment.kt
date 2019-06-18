@@ -2,7 +2,6 @@ package rappi.test.com.movieratins.ui
 
 import android.os.Bundle
 import android.view.*
-import androidx.annotation.LayoutRes
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -14,13 +13,11 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import rappi.test.com.movieratins.R
 import rappi.test.com.movieratins.databinding.FragmentListMovieBinding
-import rappi.test.com.movieratins.databinding.TemplateMovieBinding
 import rappi.test.com.movieratins.domain.Movie
 import rappi.test.com.movieratins.ui.adapters.ListMoviesAdapter
 import rappi.test.com.movieratins.viewmodels.MoviesViewModel
 
-
-class ListMovieFragment : Fragment() {
+class PopularityMovieFragment : Fragment() {
 
     /**
      * One way to delay creation of the viewModel until an appropriate lifecycle method is to use
@@ -48,7 +45,7 @@ class ListMovieFragment : Fragment() {
      */
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel.movieList.observe(viewLifecycleOwner, Observer<List<Movie>> { movies ->
+        viewModel.popularityMoviesList.observe(viewLifecycleOwner, Observer<List<Movie>> { movies ->
             movies?.apply {
                 viewModelAdapter?.movies = movies
             }
@@ -86,8 +83,8 @@ class ListMovieFragment : Fragment() {
         viewModel.navigateToMovieData.observe(this, Observer { movie ->
             movie?.let {
                 this.findNavController().navigate(
-                    ListMovieFragmentDirections
-                        .actionListMovieFragmentToMovieDetailFragment(movie)
+                    PopularityMovieFragmentDirections
+                        .actionPopularityMovieFragmentToMovieDetailFragment(movie)
                 )
                 viewModel.onMovieDataNavigated()
             }
@@ -111,29 +108,5 @@ class ListMovieFragment : Fragment() {
             view!!.findNavController()
         )
                 || super.onOptionsItemSelected(item)
-    }
-}
-
-/**
- * Click listener for Videos. By giving the block a name it helps a reader understand what it does.
- *
- */
-class MovieClick(val clickListener: (movieId: Long) -> Unit) {
-    /**
-     * Called when a movie is clicked
-     *
-     * @param movie the movie that was clicked
-     */
-    fun onClick(movie: Movie) = clickListener(movie.id)
-}
-
-/**
- * ViewHolder for DevByte items. All work is done by data binding.
- */
-class MovieViewHolder(val viewDataBinding: TemplateMovieBinding) :
-    RecyclerView.ViewHolder(viewDataBinding.root) {
-    companion object {
-        @LayoutRes
-        val LAYOUT = R.layout.template_movie
     }
 }

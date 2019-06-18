@@ -52,12 +52,15 @@ class MoviesViewModel(application: Application) : AndroidViewModel(application) 
         val isConnected: Boolean = activeNetwork?.isConnected == true
         if (isConnected) {
             viewModelScope.launch {
-                moviesRepository.refreshVideos()
+                moviesRepository.refreshMovies()
             }
         }
     }
 
-    val playlist = moviesRepository.movies
+    val movieList = moviesRepository.movies
+    val topMoviesList = moviesRepository.topMovies
+    val upcomingMoviesList = moviesRepository.upcomingMovies
+    val popularityMoviesList = moviesRepository.popularityMovies
 
     /**
      * Cancel all coroutines when the ViewModel is cleared
