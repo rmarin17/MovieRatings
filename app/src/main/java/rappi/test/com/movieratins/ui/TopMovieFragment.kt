@@ -19,30 +19,14 @@ import rappi.test.com.movieratins.viewmodels.MoviesViewModel
 
 class TopMovieFragment : Fragment() {
 
-    /**
-     * One way to delay creation of the viewModel until an appropriate lifecycle method is to use
-     * lazy. This requires that viewModel not be referenced before onActivityCreated, which we
-     * do in this Fragment.
-     */
     private val viewModel: MoviesViewModel by lazy {
-        val activity = requireNotNull(this.activity) {
-            "You can only access the viewModel after onActivityCreated()"
-        }
+        val activity = requireNotNull(this.activity) { }
         ViewModelProviders.of(this, MoviesViewModel.Factory(activity.application))
             .get(MoviesViewModel::class.java)
     }
 
-    /**
-     * RecyclerView Adapter for converting a list of Video to cards.
-     */
     private var viewModelAdapter: ListMoviesAdapter? = null
 
-    /**
-     * Called when the fragment's activity has been created and this
-     * fragment's view hierarchy instantiated.  It can be used to do final
-     * initialization once these pieces are in place, such as retrieving
-     * views or restoring state.
-     */
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewModel.topMoviesList.observe(viewLifecycleOwner, Observer<List<Movie>> { movies ->
@@ -52,22 +36,6 @@ class TopMovieFragment : Fragment() {
         })
     }
 
-    /**
-     * Called to have the fragment instantiate its user interface view.
-     *
-     * <p>If you return a View from here, you will later be called in
-     * {@link #onDestroyView} when the view is being released.
-     *
-     * @param inflater The LayoutInflater object that can be used to inflate
-     * any views in the fragment,
-     * @param container If non-null, this is the parent view that the fragment's
-     * UI should be attached to.  The fragment should not add the view itself,
-     * but this can be used to generate the LayoutParams of the view.
-     * @param savedInstanceState If non-null, this fragment is being re-constructed
-     * from a previous saved state as given here.
-     *
-     * @return Return the View for the fragment's UI.
-     */
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
