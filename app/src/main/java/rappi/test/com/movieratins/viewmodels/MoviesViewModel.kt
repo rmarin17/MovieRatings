@@ -40,9 +40,6 @@ class MoviesViewModel(application: Application) : AndroidViewModel(application) 
      */
     private val viewModelScope = CoroutineScope(viewModelJob + Dispatchers.Main)
 
-
-
-
     private val database = getDatabase(application)
     private val moviesRepository = MoviesRepository(database)
 

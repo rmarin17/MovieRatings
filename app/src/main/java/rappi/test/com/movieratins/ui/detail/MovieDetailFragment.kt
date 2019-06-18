@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.*
-import androidx.navigation.fragment.findNavController
 import com.example.android.devbyteviewer.database.DatabaseMovie
 import com.example.android.devbyteviewer.database.MovieDao
 import com.example.android.devbyteviewer.database.getDatabase
@@ -28,7 +27,7 @@ class MovieDetailFragment : Fragment() {
 
         // Create an instance of the ViewModel Factory.
         val dataSource = getDatabase(application).movieDao
-        val viewModelFactory = SleepDetailViewModelFactory(arguments.movieKey, dataSource)
+        val viewModelFactory = MovieDetailViewModelFactory(arguments.movieKey, dataSource)
 
         // Get a reference to the ViewModel associated with this fragment.
         val movieDetailViewModel =
@@ -41,17 +40,6 @@ class MovieDetailFragment : Fragment() {
 
         binding.setLifecycleOwner(this)
 
-        // Add an Observer to the state variable for Navigating when a Quality icon is tapped.
-        /*movieDetailViewModel.navigateToSleepTracker.observe(this, Observer {
-            if (it == true) { // Observed state is true.
-                this.findNavController().navigate(
-                    MovieDetailFragmentDirections.actionSleepDetailFragmentToSleepTrackerFragment())
-                // Reset state to make sure we only navigate once, even if the device
-                // has a configuration change.
-                movieDetailViewModel.doneNavigating()
-            }
-        })*/
-
         return binding.root
     }
 }
@@ -59,7 +47,6 @@ class MovieDetailFragment : Fragment() {
 class MovieDetailViewModel(
     private val movieKey: Long = 0L,
     dataSource: MovieDao) : ViewModel() {
-
     /**
      * Hold a reference to SleepDatabase via its SleepDatabaseDao.
      */
@@ -79,21 +66,19 @@ class MovieDetailViewModel(
     init {
         movie.addSource(database.getMovieWithId(movieKey), movie::setValue)
     }
-
     /**
      * Variable that tells the fragment whether it should navigate to [SleepTrackerFragment].
      *
      * This is `private` because we don't want to expose the ability to set [MutableLiveData] to
      * the [Fragment]
      */
-    private val _navigateToSleepTracker = MutableLiveData<Boolean?>()
+    private val _navigateToListMovie = MutableLiveData<Boolean?>()
 
     /**
      * When true immediately navigate back to the [SleepTrackerFragment]
      */
-    val navigateToSleepTracker: LiveData<Boolean?>
-        get() = _navigateToSleepTracker
-
+    val navigateToListMovie: LiveData<Boolean?>
+        get() = _navigateToListMovie
     /**
      * Cancels all coroutines when the ViewModel is cleared, to cleanup any pending work.
      *
@@ -103,22 +88,18 @@ class MovieDetailViewModel(
         super.onCleared()
         viewModelJob.cancel()
     }
-
-
     /**
      * Call this immediately after navigating to [SleepTrackerFragment]
      */
     fun doneNavigating() {
-        _navigateToSleepTracker.value = null
+        _navigateToListMovie.value = null
     }
-
     fun onClose() {
-        _navigateToSleepTracker.value = true
+        _navigateToListMovie.value = true
     }
-
 }
 
-class SleepDetailViewModelFactory(
+class MovieDetailViewModelFactory(
     private val sleepNightKey: Long,
     private val dataSource: MovieDao) : ViewModelProvider.Factory {
     @Suppress("unchecked_cast")

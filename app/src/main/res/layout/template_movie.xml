@@ -3,7 +3,7 @@
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
->
+        android:id="@+id/layout2">
 
     <data>
         <variable
@@ -24,16 +24,14 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:layout_marginLeft="8dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
-                android:layout_marginRight="8dp"
                 android:layout_marginBottom="8dp"
                 app:cardElevation="8dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+                app:layout_constraintTop_toTopOf="parent" android:id="@+id/materialCardView">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/linearLayout"
@@ -90,13 +88,13 @@
                 <ImageView
                         android:id="@+id/iconStar"
                         android:layout_width="@dimen/icon"
-                        android:layout_height="@dimen/icon"
+                        android:layout_height="29dp"
                         android:layout_marginStart="8dp"
                         android:layout_marginTop="8dp"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/iconDate"
-                        app:srcCompat="@drawable/ic_star" app:layout_constraintBottom_toBottomOf="parent"
-                        android:layout_marginBottom="8dp"/>
+                        app:srcCompat="@drawable/ic_star"
+                        app:layout_constraintBottom_toBottomOf="parent" android:layout_marginBottom="8dp"/>
 
                 <TextView
                         android:id="@+id/date"
@@ -119,6 +117,28 @@
                         tools:text="1000"
                         android:text='@{"" + movie.voteAverage}'
                         app:layout_constraintTop_toTopOf="@+id/iconStar"/>
+
+                <ImageView
+                        android:layout_width="@dimen/icon"
+                        android:layout_height="@dimen/icon"
+                        app:srcCompat="@drawable/ic_popularity"
+                        android:id="@+id/iconPopularity"
+                        app:layout_constraintBottom_toBottomOf="@+id/iconStar"
+                        app:layout_constraintTop_toTopOf="@+id/iconStar"
+                        app:layout_constraintStart_toEndOf="@+id/start"
+                        android:layout_marginStart="32dp"/>
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/popularity"
+                        app:layout_constraintTop_toTopOf="@+id/iconPopularity"
+                        app:layout_constraintStart_toEndOf="@+id/iconPopularity"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginBottom="8dp"
+                        app:layout_constraintBottom_toBottomOf="@+id/iconPopularity"
+                        android:layout_marginTop="8dp"
+                        tools:text="100"
+                        android:text='@{"" + movie.popularity}'/>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </com.google.android.material.card.MaterialCardView>

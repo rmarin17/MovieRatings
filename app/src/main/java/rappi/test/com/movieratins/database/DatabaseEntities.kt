@@ -13,6 +13,7 @@ data class DatabaseMovie constructor(
     val title: String,
     val backdropPath: String,
     val voteAverage: Float = 0f,
+    val popularity:Float = 0f,
     val posterPath: String
 )
 
@@ -25,7 +26,8 @@ fun List<DatabaseMovie>.asDomainModel(): List<Movie> {
             title = it.title,
             backdropPath = it.backdropPath,
             voteAverage = it.voteAverage,
-            posterPath = it.posterPath
+            posterPath = it.posterPath,
+            popularity = it.popularity
         )
     }
 }

@@ -10,21 +10,11 @@ import rappi.test.com.movieratins.util.smartTruncate
 
 data class Movie(
     var id: Long,
-
     var posterPath: String,
     var overview: String,
-
     var releaseDate: String,
     var title: String,
-
     var backdropPath: String,
-
-    var voteAverage: Float = 0f
-) {
-
-    /**
-     * Short description is used for displaying truncated overview in the UI
-     */
-    val shortDescription: String
-        get() = overview.smartTruncate(200)
-}
+    var voteAverage: Float = 0f,
+    var popularity:Float = 0f
+)

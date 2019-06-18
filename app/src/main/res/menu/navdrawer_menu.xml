@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <item android:title="@string/rules" android:id="@+id/rulesFragment"/>
-    <item android:title="@string/about" android:id="@+id/aboutFragment"/>
+    <item android:title="@string/popularity" android:id="@+id/popularityFragment"
+          android:icon="@drawable/ic_popularity"/>
+    <item android:title="@string/topRated" android:id="@+id/topFragment" android:icon="@drawable/ic_star"/>
+    <item android:title="@string/upcoming" android:id="@+id/upcominFragment" android:icon="@drawable/ic_calendar"/>
 </menu>

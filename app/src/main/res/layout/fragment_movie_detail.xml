@@ -110,6 +110,22 @@
                         android:text='@{"" + movieDetailViewModel.movie.voteAverage}'
                         app:layout_constraintTop_toTopOf="@+id/iconStar"/>
 
+                <ImageView
+                        android:layout_width="@dimen/icon"
+                        android:layout_height="@dimen/icon" app:srcCompat="@drawable/ic_popularity"
+                        android:id="@+id/iconPopularity"
+                        app:layout_constraintBottom_toBottomOf="@+id/iconStar"
+                        app:layout_constraintTop_toTopOf="@+id/iconStar" app:layout_constraintStart_toEndOf="@+id/start"
+                        android:layout_marginStart="32dp"/>
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" android:id="@+id/popularity"
+                        app:layout_constraintTop_toTopOf="@+id/iconPopularity"
+                        app:layout_constraintStart_toEndOf="@+id/iconPopularity" android:layout_marginStart="16dp"
+                        android:layout_marginBottom="8dp" app:layout_constraintBottom_toBottomOf="@+id/iconPopularity"
+                        android:layout_marginTop="8dp" tools:text="100"
+                        android:text='@{"" + movieDetailViewModel.movie.popularity}'/>
+
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </com.google.android.material.card.MaterialCardView>

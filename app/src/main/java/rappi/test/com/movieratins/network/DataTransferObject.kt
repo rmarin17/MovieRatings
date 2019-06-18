@@ -31,6 +31,7 @@ data class Results(
     val id: Long,
     val overview: String,
     val title: String,
+    val popularity: Float = 0f,
     @Json(name = "backdrop_path") val backdropPath: String,
     @Json(name = "vote_average") val voteAverage: Float = 0f,
     @Json(name = "poster_path") val posterPath: String,
@@ -49,7 +50,8 @@ fun NetworkMovieContainer.asDomainModel(): List<Movie> {
             title = it.title,
             backdropPath = it.backdropPath,
             voteAverage = it.voteAverage,
-            posterPath = it.posterPath
+            posterPath = it.posterPath,
+            popularity = it.popularity
         )
     }
 }
@@ -63,7 +65,8 @@ fun NetworkMovieContainer.asDatabaseModel(): Array<DatabaseMovie> {
             title = it.title,
             backdropPath = it.backdropPath,
             voteAverage = it.voteAverage,
-            posterPath = it.posterPath
+            posterPath = it.posterPath,
+            popularity = it.popularity
         )
     }.toTypedArray()
 }

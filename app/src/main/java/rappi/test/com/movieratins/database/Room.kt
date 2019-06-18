@@ -12,6 +12,15 @@ interface MovieDao {
     @Query("SELECT * from databasemovie WHERE id = :key")
     fun getMovieWithId(key: Long): LiveData<DatabaseMovie>
 
+    @Query("select * from databasemovie order by releaseDate desc")
+    fun getMoviesLatest(): LiveData<List<DatabaseMovie>>
+
+    @Query("select * from databasemovie order by popularity desc")
+    fun getMoviesPopularity(): LiveData<List<DatabaseMovie>>
+
+    @Query("select * from databasemovie order by voteAverage desc")
+    fun getMoviesTopRated(): LiveData<List<DatabaseMovie>>
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertAll(vararg videos: DatabaseMovie)
 }

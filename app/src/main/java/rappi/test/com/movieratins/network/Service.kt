@@ -10,14 +10,13 @@ import retrofit2.http.GET
 import retrofit2.http.Query
 
 private const val BASE_URL = "https://api.themoviedb.org/4/"
-//private const val BASE_URL = "https://api.themoviedb.org/3/"
 
 /**
  * A retrofit service to fetch a movie playlist.
  */
 interface MoviesService {
     @GET("list/1")
-    fun getPopular(
+    fun getMovies(
         @Query("api_key") apiKey: String,
         @Query("language") l: String
     ): Deferred<NetworkMovieContainer>

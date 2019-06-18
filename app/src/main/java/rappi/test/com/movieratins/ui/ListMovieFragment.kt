@@ -1,20 +1,15 @@
 package rappi.test.com.movieratins.ui
 
-import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.view.*
-import android.widget.Toast
 import androidx.annotation.LayoutRes
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-import androidx.navigation.Navigation
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.NavigationUI
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import rappi.test.com.movieratins.R
@@ -83,12 +78,9 @@ class ListMovieFragment : Fragment() {
             DataBindingUtil.inflate(inflater, R.layout.fragment_list_movie, container, false)
         // Set the lifecycleOwner so DataBinding can observe LiveData
         binding.setLifecycleOwner(viewLifecycleOwner)
-
         binding.viewModel = viewModel
-
         viewModelAdapter = ListMoviesAdapter(MovieClick { movieId ->
             viewModel.onMovieClicked(movieId)
-
         })
         viewModel.navigateToMovieData.observe(this, Observer { movie ->
             movie?.let {
@@ -99,24 +91,20 @@ class ListMovieFragment : Fragment() {
                 viewModel.onMovieDataNavigated()
             }
         })
-
         binding.root.findViewById<RecyclerView>(R.id.recycler_view).apply {
             layoutManager = LinearLayoutManager(context)
             adapter = viewModelAdapter
         }
-
         setHasOptionsMenu(true)
-
         return binding.root
     }
 
     override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
         super.onCreateOptionsMenu(menu, inflater)
-        inflater?.inflate(R.menu.categories_menu, menu)
+        inflater?.inflate(R.menu.about_menu, menu)
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-
         return NavigationUI.onNavDestinationSelected(
             item!!,
             view!!.findNavController()
@@ -141,55 +129,48 @@ class MovieClick(val clickListener: (movieId: Long) -> Unit) {
 /**
  * RecyclerView Adapter for setting up data binding on the items in the list.
  */
-class ListMoviesAdapter(val clickListener: MovieClick) : RecyclerView.Adapter<DevByteViewHolder>() {
-
+class ListMoviesAdapter(val clickListener: MovieClick) : RecyclerView.Adapter<MovieViewHolder>() {
     /**
      * The results that our Adapter will show
      */
     var movies: List<Movie> = emptyList()
         set(value) {
             field = value
-            // For an extra challenge, update this to use the paging library.
-
             // Notify any registered observers that the data set has changed. This will cause every
             // element in our RecyclerView to be invalidated.
             notifyDataSetChanged()
         }
-
     /**
      * Called when RecyclerView needs a new {@link ViewHolder} of the given type to represent
      * an item.
      */
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DevByteViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieViewHolder {
         val withDataBinding: TemplateMovieBinding = DataBindingUtil.inflate(
             LayoutInflater.from(parent.context),
-            DevByteViewHolder.LAYOUT,
+            MovieViewHolder.LAYOUT,
             parent,
             false
         )
-        return DevByteViewHolder(withDataBinding)
+        return MovieViewHolder(withDataBinding)
     }
-
     override fun getItemCount() = movies.size
-
     /**
      * Called by RecyclerView to display the data at the specified position. This method should
      * update the contents of the {@link ViewHolder#itemView} to reflect the item at the given
      * position.
      */
-    override fun onBindViewHolder(holder: DevByteViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: MovieViewHolder, position: Int) {
         holder.viewDataBinding.also {
             it.movie = movies[position]
             it.clickListener = clickListener
         }
     }
-
 }
 
 /**
  * ViewHolder for DevByte items. All work is done by data binding.
  */
-class DevByteViewHolder(val viewDataBinding: TemplateMovieBinding) :
+class MovieViewHolder(val viewDataBinding: TemplateMovieBinding) :
     RecyclerView.ViewHolder(viewDataBinding.root) {
     companion object {
         @LayoutRes
